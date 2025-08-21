@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  application:
+    name: kuangkuang
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true # jdbc:mysql://192.168.182.1:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: zty
+    password: 102800
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true # jdbc:mysql://192.168.182.1:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: zty
+      password: 102800
+
+server:
+  port: 8080
+
+
+logging:
+  level:
+    com:
+      kuangkuang:
+        mapper: debug
+        service: info
+        controller: info
+
+mybatis:
+  #mapper????
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.kuangkuang.kuangkuang.pojo.entity
+  configuration:
+    #??????
+    map-underscore-to-camel-case: true
+
+
