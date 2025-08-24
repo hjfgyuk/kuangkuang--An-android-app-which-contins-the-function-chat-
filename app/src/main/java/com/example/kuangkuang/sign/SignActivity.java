@@ -1,5 +1,6 @@
 package com.example.kuangkuang.sign;
 
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.kuangkuang.R;
+import com.example.kuangkuang.root.RootActivity;
 import com.example.kuangkuang.ui.login.LoginFormState;
 import com.example.kuangkuang.ui.login.LoginViewModel;
 import com.example.kuangkuang.ui.login.LoginViewModelFactory;
@@ -125,7 +127,11 @@ public class SignActivity extends AppCompatActivity {
                                     } else {
                                         text = "";
                                     }
-                                    runOnUiThread(()->{tvResult.setText(text);Log.d("注册",jsonData);});
+                                    runOnUiThread(()->{tvResult.setText(text);Log.d("注册",jsonData);if(code==1){
+                                        Intent intent = new Intent(SignActivity.this, RootActivity.class);
+                                        startActivity(intent);
+                                    }
+                                    });
                                 }
                             });
 

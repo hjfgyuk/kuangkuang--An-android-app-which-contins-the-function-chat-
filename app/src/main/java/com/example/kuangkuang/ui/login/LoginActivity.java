@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -24,15 +25,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kuangkuang.R;
+import com.example.kuangkuang.entity.User;
+import com.example.kuangkuang.factory.BaseRetrofitFactory;
+import com.example.kuangkuang.root.RootActivity;
+import com.example.kuangkuang.service.UserService;
 import com.example.kuangkuang.sign.SignActivity;
 import com.example.kuangkuang.ui.login.LoginViewModel;
 import com.example.kuangkuang.ui.login.LoginViewModelFactory;
 import com.example.kuangkuang.databinding.ActivityLoginBinding;
 
+import kotlin.jvm.internal.ReflectionFactory;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private BaseRetrofitFactory retrofitFactory = new BaseRetrofitFactory();
     private ActivityLoginBinding binding;
+
+    private UserService userService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = binding.login;
         final Button signButton = binding.sign;
         final ProgressBar loadingProgressBar = binding.loading;
+        OkHttpClient client = new  OkHttpClient();
+        userService = retrofitFactory.setRetrofit().create(UserService.class);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -124,6 +141,30 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                User user = new User();
+                String myname = usernameEditText.getText().toString();
+                String mypassword = passwordEditText.getText().toString();
+                user.setName(myname);
+                user.setPassword(mypassword);
+                Call<User> getUser = userService.getUserByName(user);
+                getUser.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                       User result = response.body();
+                        if(result.getCode()==1){
+                           Log.d("登录","登陆成功"+result.toString());
+                           Intent intent = new Intent(LoginActivity.this, RootActivity.class);
+                           startActivity(intent);
+                       }else{
+                           Log.w("登录","登陆失败");
+                       }
+                    }
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        Log.w("登录",call.toString());
+                    }
+                });
+
             }
         });
         signButton.setOnClickListener(new View.OnClickListener() {
