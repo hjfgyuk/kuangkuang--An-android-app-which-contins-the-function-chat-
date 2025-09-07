@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.kuangkuang.R;
+import com.example.kuangkuang.context.BaseContext;
 import com.example.kuangkuang.root.RootActivity;
 import com.example.kuangkuang.ui.login.LoginFormState;
 import com.example.kuangkuang.ui.login.LoginViewModel;
@@ -122,6 +123,7 @@ public class SignActivity extends AppCompatActivity {
                                     String text;
                                     if (code==1) {
                                         text ="注册成功" ;
+                                        BaseContext.setCurrentId(result.get("id").getAsLong());
                                     } else if (code==0) {
                                       text ="用户名已存在";
                                     } else {

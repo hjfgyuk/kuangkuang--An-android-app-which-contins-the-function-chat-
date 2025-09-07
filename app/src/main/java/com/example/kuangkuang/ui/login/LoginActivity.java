@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kuangkuang.R;
+import com.example.kuangkuang.context.BaseContext;
+import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.entity.User;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
 import com.example.kuangkuang.root.RootActivity;
@@ -146,13 +148,14 @@ public class LoginActivity extends AppCompatActivity {
                 String mypassword = passwordEditText.getText().toString();
                 user.setName(myname);
                 user.setPassword(mypassword);
-                Call<User> getUser = userService.getUserByName(user);
-                getUser.enqueue(new Callback<User>() {
+                Call<Result<User>> getUser = userService.getUserByName(user);
+                getUser.enqueue(new Callback<Result<User>>() {
                     @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                       User result = response.body();
+                    public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
+                       User result = response.body().getData();
                         if(result.getCode()==1){
                            Log.d("登录","登陆成功"+result.toString());
+                            BaseContext.setCurrentId((long) result.id);
                            Intent intent = new Intent(LoginActivity.this, RootActivity.class);
                            startActivity(intent);
                        }else{
@@ -160,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                        }
                     }
                     @Override
-                    public void onFailure(Call<User> call, Throwable t) {
+                    public void onFailure(Call<Result<User>> call, Throwable t) {
                         Log.w("登录",call.toString());
                     }
                 });
