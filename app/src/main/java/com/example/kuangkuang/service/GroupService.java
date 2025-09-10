@@ -1,6 +1,7 @@
 package com.example.kuangkuang.service;
 
 import com.example.kuangkuang.entity.Group;
+import com.example.kuangkuang.entity.Result;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ import retrofit2.http.Query;
 
 public interface GroupService {
     @POST("/group/{userId}")
-    Call<List<Group>> getByGroupId(@Path("userId") int usrId);
+    Call<Result<List<Group>>> getByGroupId(@Path("userId") int usrId);
     @DELETE("/group/delete/{id}")
-    Call<Boolean> delete(@Query("id") int groupId);
+    Call<Result> delete(@Query("id") int groupId);
     @POST("/group/add")
-    Call<Boolean> add(@Body Group group);
+    Call<Result> add(@Body Group group);
 }

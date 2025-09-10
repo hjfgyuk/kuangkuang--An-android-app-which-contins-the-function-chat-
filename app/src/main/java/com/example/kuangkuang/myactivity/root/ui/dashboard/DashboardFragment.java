@@ -1,4 +1,4 @@
-package com.example.kuangkuang.root.ui.dashboard;
+package com.example.kuangkuang.myactivity.root.ui.dashboard;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

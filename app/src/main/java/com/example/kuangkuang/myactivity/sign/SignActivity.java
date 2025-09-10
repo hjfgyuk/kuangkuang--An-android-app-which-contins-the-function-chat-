@@ -1,32 +1,26 @@
-package com.example.kuangkuang.sign;
+package com.example.kuangkuang.myactivity.sign;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.kuangkuang.R;
 import com.example.kuangkuang.context.BaseContext;
-import com.example.kuangkuang.root.RootActivity;
-import com.example.kuangkuang.ui.login.LoginFormState;
-import com.example.kuangkuang.ui.login.LoginViewModel;
-import com.example.kuangkuang.ui.login.LoginViewModelFactory;
+import com.example.kuangkuang.entity.User;
+import com.example.kuangkuang.myactivity.BaseActivity;
+import com.example.kuangkuang.myactivity.root.RootActivity;
+import com.example.kuangkuang.myactivity.login.LoginViewModel;
+import com.example.kuangkuang.myactivity.login.LoginViewModelFactory;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -38,12 +32,11 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
-import okhttp3.OkHttp;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-public class SignActivity extends AppCompatActivity {
+public class SignActivity extends BaseActivity {
     private LoginViewModel loginViewModel;
     private JsonObject result;
     @Override
@@ -124,6 +117,10 @@ public class SignActivity extends AppCompatActivity {
                                     if (code==1) {
                                         text ="注册成功" ;
                                         BaseContext.setCurrentId(result.get("id").getAsLong());
+                                        User user = new User();
+                                        user.setName(String.valueOf(nameEdit.getText()));
+                                        BaseContext.setCurrentUser(user);
+
                                     } else if (code==0) {
                                       text ="用户名已存在";
                                     } else {

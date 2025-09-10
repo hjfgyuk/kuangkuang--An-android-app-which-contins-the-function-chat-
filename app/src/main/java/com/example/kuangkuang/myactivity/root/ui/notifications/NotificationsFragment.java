@@ -1,4 +1,4 @@
-package com.example.kuangkuang.root.ui.notifications;
+package com.example.kuangkuang.myactivity.root.ui.notifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

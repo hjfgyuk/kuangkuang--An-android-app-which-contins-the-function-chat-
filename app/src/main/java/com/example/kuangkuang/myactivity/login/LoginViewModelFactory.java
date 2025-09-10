@@ -1,4 +1,4 @@
-package com.example.kuangkuang.ui.login;
+package com.example.kuangkuang.myactivity.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;

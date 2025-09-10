@@ -1,4 +1,4 @@
-package com.example.kuangkuang.ui.login;
+package com.example.kuangkuang.myactivity.login;
 
 /**
  * Class exposing authenticated user details to the UI.

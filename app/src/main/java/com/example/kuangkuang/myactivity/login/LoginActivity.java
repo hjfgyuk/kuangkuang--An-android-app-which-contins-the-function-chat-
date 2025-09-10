@@ -1,4 +1,4 @@
-package com.example.kuangkuang.ui.login;
+package com.example.kuangkuang.myactivity.login;
 
 import android.app.Activity;
 
@@ -29,21 +29,18 @@ import com.example.kuangkuang.context.BaseContext;
 import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.entity.User;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
-import com.example.kuangkuang.root.RootActivity;
+import com.example.kuangkuang.myactivity.BaseActivity;
+import com.example.kuangkuang.myactivity.root.RootActivity;
 import com.example.kuangkuang.service.UserService;
-import com.example.kuangkuang.sign.SignActivity;
-import com.example.kuangkuang.ui.login.LoginViewModel;
-import com.example.kuangkuang.ui.login.LoginViewModelFactory;
+import com.example.kuangkuang.myactivity.sign.SignActivity;
 import com.example.kuangkuang.databinding.ActivityLoginBinding;
 
-import kotlin.jvm.internal.ReflectionFactory;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private LoginViewModel loginViewModel;
     private BaseRetrofitFactory retrofitFactory = new BaseRetrofitFactory();
@@ -156,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(result.getCode()==1){
                            Log.d("登录","登陆成功"+result.toString());
                             BaseContext.setCurrentId((long) result.id);
+                            BaseContext.setCurrentUser(result);
                            Intent intent = new Intent(LoginActivity.this, RootActivity.class);
                            startActivity(intent);
                        }else{
@@ -188,5 +186,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onBackPressed() {
+        // 直接退出应用
+        super.onBackPressed();
+        finishAffinity(); // 结束所有Activity
+        System.exit(0); // 退出进程
     }
 }

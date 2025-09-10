@@ -1,8 +1,6 @@
-package com.example.kuangkuang;
+package com.example.kuangkuang.myactivity.message;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,29 +8,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.kuangkuang.myactivity.login.LoginActivity;
+import com.example.kuangkuang.R;
+import com.example.kuangkuang.myactivity.BaseActivity;
 
-public class InitFragement extends AppCompatActivity {
+public class MessageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_init_fragement);
+        setContentView(R.layout.activity_message);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
-        new Handler().postDelayed(start,2000);
     }
-   private  Runnable start = new Runnable() {
-       @Override
-       public void run() {
-           Intent intent = new Intent(InitFragement.this, LoginActivity.class);
-           startActivity(intent);
-       }
-   };
 }

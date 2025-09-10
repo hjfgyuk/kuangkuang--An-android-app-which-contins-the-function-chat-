@@ -11,4 +11,8 @@ public interface UserService {
     @POST("/user/login")
     Call<Result<User>> getUserByName(@Body User user);
 
+    @POST("/user/logout")
+    Call<Result> logout();
+    @POST("/user/update")
+    Call<Result> update(@Body User user);
 }

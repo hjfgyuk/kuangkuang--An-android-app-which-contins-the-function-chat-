@@ -16,7 +16,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".root.RootActivity"
+            android:name=".myactivity.BaseActivity"
+            android:exported="true" />
+        <activity
+            android:name=".myactivity.message.MessageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".myactivity.UserInfoActivity.UserInfoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".myactivity.root.RootActivity"
             android:exported="true"
             android:label="@string/title_activity_root" >
             <intent-filter>
@@ -24,10 +33,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".sign.SignActivity"
+            android:name=".myactivity.sign.SignActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".myactivity.login.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login" />
         <activity

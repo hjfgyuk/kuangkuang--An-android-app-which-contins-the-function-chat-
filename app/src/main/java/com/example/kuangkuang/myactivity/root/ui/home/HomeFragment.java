@@ -1,6 +1,4 @@
-package com.example.kuangkuang.root.ui.home;
-
-import static androidx.compose.ui.platform.AndroidComposeViewAccessibilityDelegateCompat_androidKt.findById;
+package com.example.kuangkuang.myactivity.root.ui.home;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.kuangkuang.R;
 import com.example.kuangkuang.adapter.GroupAdapter;
 import com.example.kuangkuang.context.BaseContext;
 import com.example.kuangkuang.databinding.FragmentHomeBinding;
 import com.example.kuangkuang.entity.Group;
+import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
 import com.example.kuangkuang.service.GroupService;
 
@@ -42,12 +40,12 @@ private OkHttpClient client = new  OkHttpClient();
     binding = FragmentHomeBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
         Log.d("userid",String.valueOf(BaseContext.getCurrentId()));
-        Call<List<Group>> groupCall = groupService.getByGroupId(Math.toIntExact(BaseContext.getCurrentId()));
-        groupCall.enqueue(new retrofit2.Callback<List<Group>>() {
+        Call<Result<List<Group>>> groupCall = groupService.getByGroupId(Math.toIntExact(BaseContext.getCurrentId()));
+        groupCall.enqueue(new retrofit2.Callback<Result<List<Group>>>() {
             @Override
-            public void onResponse(Call<List<Group>> call, retrofit2.Response<List<Group>> response) {
+            public void onResponse(Call<Result<List<Group>>> call, retrofit2.Response<Result<List<Group>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Group> groups = response.body();
+                    List<Group> groups = response.body().getData();
                     GroupAdapter adapter = new GroupAdapter(getActivity(), groups);
                     ListView listView = binding.lvGroup;
                     listView.setAdapter(adapter);
@@ -60,7 +58,7 @@ private OkHttpClient client = new  OkHttpClient();
             }
 
             @Override
-            public void onFailure(Call<List<Group>> call, Throwable t) {
+            public void onFailure(Call<Result<List<Group>>> call, Throwable t) {
                 // 网络请求失败
                 Log.e("HomeFragment", "API call failed: " + t.getMessage());
             }

@@ -10,16 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.kuangkuang.R;
 import com.example.kuangkuang.entity.Group;
+import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
-import com.example.kuangkuang.root.ui.home.HomeFragment;
 import com.example.kuangkuang.service.GroupService;
-import com.example.kuangkuang.service.UserService;
 
-import java.io.IOException;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -68,8 +64,8 @@ public class GroupAdapter extends BaseAdapter implements AdapterView.OnItemClick
         }
         Group group=groups.get(position);
         holder.group_name.setText(group.getName());
-        //holder.group_avatar.setImageResource(group.getAvatar());
-        holder.group_unread.setText(group.getMessageUnread());
+        holder.group_avatar.setImageResource(R.drawable.avatar_deafult);
+        holder.group_unread.setText("未读消息："+ group.getMessageUnread());
         return convertView;
     }
 
@@ -81,15 +77,15 @@ public class GroupAdapter extends BaseAdapter implements AdapterView.OnItemClick
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        retrofit2.Call<Boolean> result = groupService.delete(groups.get(position).getId());
-        result.enqueue(new Callback<Boolean>() {
+        retrofit2.Call<Result> result = groupService.delete(groups.get(position).getId());
+        result.enqueue(new Callback<Result>() {
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+            public void onResponse(Call<Result> call, Response<Result> response) {
                 Log.d("delete","删除成功"+call.toString());
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<Result> call, Throwable t) {
                 Log.w("delete","删除失败"+call.toString());
             }
         });
