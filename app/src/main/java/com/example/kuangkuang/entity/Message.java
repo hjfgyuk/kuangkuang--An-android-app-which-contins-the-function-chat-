@@ -7,6 +7,15 @@ public class Message {
     private int userId;
     private String message;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    private String userName;
     //发送时间
     private String time;
     //归属的群聊id

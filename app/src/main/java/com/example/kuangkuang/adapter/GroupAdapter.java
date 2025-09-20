@@ -1,6 +1,7 @@
 package com.example.kuangkuang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kuangkuang.R;
+import com.example.kuangkuang.context.BaseContext;
 import com.example.kuangkuang.entity.Group;
 import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
+import com.example.kuangkuang.myactivity.message.MessageActivity;
+import com.example.kuangkuang.myactivity.root.RootActivity;
 import com.example.kuangkuang.service.GroupService;
 
 import java.util.List;
@@ -71,7 +75,11 @@ public class GroupAdapter extends BaseAdapter implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //TODO 进入聊天页面
+        Context context = view.getContext();
+        Intent intent = new Intent(context, MessageActivity.class);
+        intent.putExtra("groupId", groups.get(position).getId());
+        intent.putExtra("userId", BaseContext.getCurrentId());
+        context.startActivity(intent);
 
     }
 
