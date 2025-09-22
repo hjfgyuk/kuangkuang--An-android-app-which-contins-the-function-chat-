@@ -49,7 +49,6 @@ private OkHttpClient client = new  OkHttpClient();
          @Override
          public boolean onMenuItemClick(MenuItem item) {
              if(item.getItemId()==R.id.action_info){
-                 //TODO 设置信息页面
                  Intent intent = new Intent(RootActivity.this, UserInfoActivity.class);
                  startActivity(intent);
              }
