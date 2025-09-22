@@ -12,4 +12,7 @@ public interface UserService {
     UserVo sign(UserDto userDto);
 
     void update(User user);
+
+
+    User getUserById(int id);
 }

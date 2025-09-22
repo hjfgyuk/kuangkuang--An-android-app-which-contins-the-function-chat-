@@ -15,10 +15,18 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+    @PostMapping("/get")
+    public Result<User> get(@RequestBody User user){
+        log.info("get user: "+user.toString());
+        User user1 = userService.getUserById(user.getId());
+        return Result.success(user1);
+    }
+
     @PostMapping("/login")
     public Result<UserVo> login(@RequestBody UserDto userDto){
         log.info("login user: " + userDto.toString());
         UserVo userVo = userService.login(userDto);
+
         log.info("login user: "+userVo.toString());
         return Result.success(userVo);
     }
@@ -41,4 +49,5 @@ public class UserController {
     public Result logout(){
         return Result.success();
     }
+
 }

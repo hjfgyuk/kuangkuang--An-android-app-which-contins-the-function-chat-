@@ -1,5 +1,6 @@
 package com.kuangkuang.kuangkuang.service.impl;
 
+import com.kuangkuang.kuangkuang.mapper.FriendMapper;
 import com.kuangkuang.kuangkuang.mapper.UserMapper;
 import com.kuangkuang.kuangkuang.pojo.dto.UserDto;
 import com.kuangkuang.kuangkuang.pojo.entity.User;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private FriendMapper friendMapper;
     @Override
     public UserVo login(UserDto userDto) {
         User user = userMapper.getByUsername(userDto);
@@ -48,5 +51,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
         userMapper.update(user);
+    }
+    @Override
+    public User getUserById(int id) {
+        User user = userMapper.getById(id);
+        return user;
     }
 }

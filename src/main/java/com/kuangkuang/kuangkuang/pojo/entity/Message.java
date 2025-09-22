@@ -20,6 +20,6 @@ public class Message {
     private String time;
     //归属的群聊id
     private int groupId;
-
+    private String userName;
 
 }

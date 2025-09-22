@@ -6,6 +6,8 @@ import com.kuangkuang.kuangkuang.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MessageServiceImpl implements MessageService {
     @Autowired
@@ -14,5 +16,11 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void send(Message message) {
         messageMapper.add(message);
+    }
+
+    @Override
+    public List<Message> getMessageById(int id) {
+        List<Message> messages = messageMapper.list(id);
+        return messages;
     }
 }

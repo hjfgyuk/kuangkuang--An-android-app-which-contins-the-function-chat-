@@ -9,8 +9,10 @@ import java.util.List;
 
 @Mapper
 public interface MessageMapper  {
-    @Select("SELECT * FROM message WHERE groupId = #{groupId} order by created_at desc")
-    List<Message> getByGroupId(int groupId);
-    @Insert("INSERT INTO message (created_by, text, created_at, groupId) VALUES (#{userId}, #{message}, now(), #{groupId}")
+    @Select("SELECT * FROM message WHERE group_id = #{groupId}")
+    List<Message> list(int groupId);
+    @Insert("INSERT INTO message (user_id,message,time, group_id,user_name) VALUES (#{userId}, #{message}, now(), #{groupId}, #{userName})")
     void add(Message message);
+    @Select("SELECT * FROM message WHERE group_id = #{groupId}")
+    List<Message> getByGroupId(int groupId);
 }

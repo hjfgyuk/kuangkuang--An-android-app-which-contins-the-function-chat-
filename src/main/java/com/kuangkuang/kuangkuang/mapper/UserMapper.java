@@ -15,4 +15,6 @@ public interface UserMapper {
     void add(UserDto userDto);
 
     void update(User user);
+    @Select("SELECT * FROM user WHERE id = #{id}")
+    User getById(int id);
 }
