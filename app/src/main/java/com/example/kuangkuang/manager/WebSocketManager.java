@@ -145,6 +145,7 @@ public class WebSocketManager {
             jsonObject.put("groupId", message.getGroupId());
             jsonObject.put("time", message.getTime());
             jsonObject.put("userId",message.getUserId());
+            jsonObject.put("userName",message.getUserName());
 
             boolean isSent = webSocket.send(jsonObject.toString());
             if (!isSent && callback != null) {

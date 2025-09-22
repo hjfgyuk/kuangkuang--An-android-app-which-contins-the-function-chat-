@@ -25,7 +25,7 @@
             <ImageButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/avatar_deafult"
+                android:src="@drawable/avatar_default"
                 android:scaleType="centerCrop"
                 android:background="@color/icon_background"
                 android:padding="5dp"/>

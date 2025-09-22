@@ -1,8 +1,7 @@
 package com.example.kuangkuang.adapter;
 
-import static com.example.kuangkuang.R.*;
-
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,10 @@ import android.widget.TextView;
 
 import com.example.kuangkuang.R;
 import com.example.kuangkuang.context.BaseContext;
-import com.example.kuangkuang.entity.Group;
 import com.example.kuangkuang.entity.Message;
 import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
+import com.example.kuangkuang.myactivity.UserInfoActivity.FriendInfoActivity;
 import com.example.kuangkuang.service.GroupService;
 
 import java.util.List;
@@ -73,7 +72,7 @@ public class MessageAdapter extends BaseAdapter implements AdapterView.OnItemCli
 //        }
 //        Message message=messages.get(position);
 //        holder.message_name.setText(message.getUserName());
-//        holder.message_avatar.setImageResource(R.drawable.avatar_deafult);
+//        holder.message_avatar.setImageResource(R.drawable.avatar_default);
 //        holder.message_text.setText(message.getMessage());
 //        return convertView;
 //    }
@@ -115,13 +114,25 @@ public View getView(int position, View convertView, ViewGroup parent) {
     }
 
     if (holder.message_avatar != null) {
-        holder.message_avatar.setImageResource(R.drawable.avatar_deafult);
+        holder.message_avatar.setImageResource(R.drawable.avatar_default);
     }
 
     if (holder.message_text != null) {
         holder.message_text.setText(message.getMessage());
     }
-
+    if (holder.message_avatar != null) {
+        holder.message_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 启动好友信息页面
+                Intent intent = new Intent(context, FriendInfoActivity.class);
+                intent.putExtra("userName", message.getUserName());
+                // 如果需要，可以传递更多信息
+                intent.putExtra("userId", message.getUserId());
+                context.startActivity(intent);
+            }
+        });
+    }
     return convertView;
 }
     @Override
@@ -140,7 +151,8 @@ public View getView(int position, View convertView, ViewGroup parent) {
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //TODO 进入个人信息页面
+
+
     }
 
     @Override

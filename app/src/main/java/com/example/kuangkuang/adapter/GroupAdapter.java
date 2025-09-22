@@ -17,7 +17,6 @@ import com.example.kuangkuang.entity.Group;
 import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
 import com.example.kuangkuang.myactivity.message.MessageActivity;
-import com.example.kuangkuang.myactivity.root.RootActivity;
 import com.example.kuangkuang.service.GroupService;
 
 import java.util.List;
@@ -68,7 +67,7 @@ public class GroupAdapter extends BaseAdapter implements AdapterView.OnItemClick
         }
         Group group=groups.get(position);
         holder.group_name.setText(group.getName());
-        holder.group_avatar.setImageResource(R.drawable.avatar_deafult);
+        holder.group_avatar.setImageResource(R.drawable.avatar_default);
         holder.group_unread.setText("未读消息："+ group.getMessageUnread());
         return convertView;
     }

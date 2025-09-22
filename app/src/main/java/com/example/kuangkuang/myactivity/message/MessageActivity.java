@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -55,12 +56,12 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
     private String message = "";
     private EditText text;
     private Button button;
+    private ImageButton back;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         intent = getIntent();
-        System.out.println(intent.getIntExtra("groupId",1)+intent.getLongExtra("userId",1));
         currentGroupId = String.valueOf(intent.getIntExtra("groupId",1));
         userId = String.valueOf(intent.getLongExtra("userId",1));
         webSocketManager = WebSocketManager.getInstance();
@@ -96,6 +97,8 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
         });
         text = findViewById(R.id.message_edit);
         button = findViewById(R.id.message_send);
+        back = findViewById(R.id.back_button);
+        back.setOnClickListener(new myClick());
         button.setOnClickListener(new myClick());
     }
     class myClick implements View.OnClickListener{
@@ -110,13 +113,16 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
                      me.setTime(formattedTime);
                     User user = BaseContext.getCurrentUser();
                     me.setUserName(user.name);
-                     me.setUserId(Integer.parseInt(userId));
+                    me.setUserId(Integer.parseInt(userId));
                     me.setGroupId(Integer.parseInt(currentGroupId));
                     me.setMessage(message);
                     addMessageToUI(me);
                     webSocketManager.sendMessage(me);
                     text.setText("");
                 }
+            }
+            if(v.getId()==R.id.back_button){
+                finish();
             }
         }
     }
