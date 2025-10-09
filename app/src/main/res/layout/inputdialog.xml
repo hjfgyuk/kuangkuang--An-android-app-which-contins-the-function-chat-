@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入群聊名称" />
+        <EditText
+            android:id="@+id/edit_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="群聊描述" />
+        <EditText
+            android:id="@+id/edit_maxNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:hint="最大群聊人数" />
+
+    <Button
+            android:id="@+id/button_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提交" />
+    </LinearLayout>

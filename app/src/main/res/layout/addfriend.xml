@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <!-- CheckBox 放在最左边 -->
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+         /> <!-- 默认隐藏 -->
+
+    <!-- 头像 -->
+    <ImageView
+        android:id="@+id/friend_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_toEndOf="@id/checkbox"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/avatar_default" />
+
+    <!-- 好友名称 -->
+    <TextView
+        android:id="@+id/friend_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/friend_avatar"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="12dp"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
