@@ -28,7 +28,6 @@
             android:gravity="center_vertical"
             android:background="@color/icon_background"
             android:padding="8dp">
-<!--TODO 完善页面，没有消息时listview不会占据大部分页面-->
             <ImageButton
                 android:id="@+id/back_button"
                 android:layout_width="wrap_content"
@@ -45,7 +44,7 @@
                 android:id="@+id/group_info"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@android:drawable/ic_menu_info_details"
+                android:src="@android:drawable/ic_menu_add"
                 android:scaleType="centerCrop"
                 android:background="@color/icon_background"
                 android:padding="5dp"/>

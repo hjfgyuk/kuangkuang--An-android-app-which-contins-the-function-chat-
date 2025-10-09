@@ -4,7 +4,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -15,7 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/menu_main"
         app:title="">
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +37,6 @@
                 android:layout_marginStart="8dp"/>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
-
     <!-- 导航宿主Fragment - 修改顶部约束到Toolbar底部 -->
     <fragment
         android:id="@+id/nav_host_fragment_activity_root"
@@ -52,7 +49,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:navGraph="@navigation/mobile_navigation" />
-
     <!-- 底部导航栏 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

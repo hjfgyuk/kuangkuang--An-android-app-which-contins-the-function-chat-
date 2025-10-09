@@ -95,7 +95,7 @@ public class SignActivity extends BaseActivity {
                             RequestBody requestBody = RequestBody.create(jsonObject.toString(),type);
                             OkHttpClient okHttpClient = new OkHttpClient();
                             Request request = new Request.Builder()
-                                    .url("http://10.0.2.2:8080/user/sign")
+                                    .url("http://192.168.43.98:8080/user/sign")
                                     .post(requestBody)
                                     .build();
 

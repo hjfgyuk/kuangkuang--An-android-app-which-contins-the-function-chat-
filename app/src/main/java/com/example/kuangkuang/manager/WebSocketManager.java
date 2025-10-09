@@ -23,7 +23,7 @@ public class WebSocketManager {
     private static WebSocketManager instance;
     private WebSocket webSocket;
     private OkHttpClient client;
-    private String serverUrl = "ws://10.0.2.2:8080/chat";
+    private String serverUrl = "ws://192.168.43.98:8080/chat";
 
     public String getGroupId() {
         return groupId;
@@ -80,12 +80,14 @@ public class WebSocketManager {
                 Log.d(TAG, "收到消息: " + text);
                 try {
                     JSONObject jsonObject = new JSONObject(text);
-                    String from = jsonObject.getString("from");
-                    String content = jsonObject.getString("content");
-                    String groupId = jsonObject.getString("group_id");
-                    String timestamp = jsonObject.getString("timestamp");
+                    String from = jsonObject.getString("userId");
+                    String content = jsonObject.getString("message");
+                    String groupId = jsonObject.getString("groupId");
+                    String timestamp = jsonObject.getString("time");
+                    String name = jsonObject.getString("userName");
 
                     if (callback != null) {
+                        Log.d("1","2222222");
                         Message message = new Message();
                         message.setMessage(content);
                         message.setGroupId(Integer.parseInt(groupId));

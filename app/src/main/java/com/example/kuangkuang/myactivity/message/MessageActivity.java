@@ -30,6 +30,7 @@ import com.example.kuangkuang.entity.User;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
 import com.example.kuangkuang.manager.WebSocketManager;
 import com.example.kuangkuang.myactivity.BaseActivity;
+import com.example.kuangkuang.myactivity.addFriend.AddFriend;
 import com.example.kuangkuang.service.MessageService;
 
 import java.text.SimpleDateFormat;
@@ -57,6 +58,7 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
     private EditText text;
     private Button button;
     private ImageButton back;
+    private ImageButton info;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,8 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
         text = findViewById(R.id.message_edit);
         button = findViewById(R.id.message_send);
         back = findViewById(R.id.back_button);
+        info = findViewById(R.id.group_info);
+        info.setOnClickListener(new myClick());
         back.setOnClickListener(new myClick());
         button.setOnClickListener(new myClick());
     }
@@ -110,7 +114,7 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     String formattedTime = sdf.format(new Date());
                     Message me = new Message();
-                     me.setTime(formattedTime);
+                    me.setTime(formattedTime);
                     User user = BaseContext.getCurrentUser();
                     me.setUserName(user.name);
                     me.setUserId(Integer.parseInt(userId));
@@ -123,6 +127,11 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
             }
             if(v.getId()==R.id.back_button){
                 finish();
+            }
+            if(v.getId()==R.id.group_info){
+                Intent intent1 = new Intent(MessageActivity.this,AddFriend.class);
+                intent1.putExtra("groupId",currentGroupId);
+                startActivity(intent1);
             }
         }
     }
@@ -144,8 +153,22 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
         addMessageToUI(message);
     }
     public void addMessageToUI(Message message){
-        int id = message.getUserId();
-         adapter.addItem(message);
+//        adapter.notifyDataSetChanged();
+//         adapter.addItem(message);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 确保adapter不为null
+                if (adapter == null) {
+                    Log.e(TAG, "Adapter is null when adding message");
+                    return;
+                }
+                adapter.addItem(message);
+                adapter.notifyDataSetChanged();
+                listView.smoothScrollToPosition(adapter.getCount() - 1);
+                Log.d(TAG, "Message added to UI: " + message.getMessage());
+            }
+        });
     }
     @Override
     public void onDisconnected() {
@@ -173,4 +196,5 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
         // 断开WebSocket连接
         WebSocketManager.getInstance().disconnect();
     }
+
 }

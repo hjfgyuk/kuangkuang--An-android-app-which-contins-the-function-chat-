@@ -71,4 +71,8 @@ private OkHttpClient client = new  OkHttpClient();
         super.onDestroyView();
         binding = null;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

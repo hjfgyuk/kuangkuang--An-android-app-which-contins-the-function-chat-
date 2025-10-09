@@ -10,6 +10,26 @@ public class Group {
     //最近的时间戳
     private String lastTime;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String description;
+
+    public String getMaxNumber() {
+        return maxNumber;
+    }
+
+    public void setMaxNumber(String maxNumber) {
+        this.maxNumber = maxNumber;
+    }
+
+    private String maxNumber;
+
     public int getId() {
         return id;
     }

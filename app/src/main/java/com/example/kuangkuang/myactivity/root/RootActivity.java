@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.example.kuangkuang.R;
 import com.example.kuangkuang.context.BaseContext;
+import com.example.kuangkuang.entity.InputDialog;
 import com.example.kuangkuang.entity.Result;
 import com.example.kuangkuang.factory.BaseRetrofitFactory;
 import com.example.kuangkuang.myactivity.BaseActivity;
 import com.example.kuangkuang.myactivity.UserInfoActivity.UserInfoActivity;
+import com.example.kuangkuang.myactivity.root.ui.home.HomeFragment;
 import com.example.kuangkuang.service.UserService;
 import com.example.kuangkuang.myactivity.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -61,6 +63,10 @@ private OkHttpClient client = new  OkHttpClient();
              } else if (item.getItemId() == R.id.action_setting) {
                  Intent intent = new Intent(RootActivity.this, UserInfoActivity.class);
                  startActivity(intent);
+             } else if (item.getItemId()==R.id.action_addGroup) {
+                 InputDialog inputDialog = new InputDialog(RootActivity.this);
+                 inputDialog.show();
+
              }
              return true;
          }
