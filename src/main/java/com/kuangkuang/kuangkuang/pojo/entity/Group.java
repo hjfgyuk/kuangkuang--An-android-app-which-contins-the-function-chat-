@@ -22,6 +22,8 @@ public class Group implements Serializable {
 //    private int messageUnread;
     //创立时间
     private LocalDateTime createTime;
+    private String description;
+    private int maxNumber;
 //    //群成员列表
 //    private List<Integer> members;
 

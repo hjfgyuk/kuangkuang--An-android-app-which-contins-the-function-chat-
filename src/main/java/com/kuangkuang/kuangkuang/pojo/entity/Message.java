@@ -15,7 +15,6 @@ public class Message {
     //发送者id
     private int userId;
     private String message;
-
     //发送时间
     private String time;
     //归属的群聊id

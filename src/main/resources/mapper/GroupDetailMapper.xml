@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kuangkuang.kuangkuang.mapper.GroupDetailMapper">
+    <insert id="addFriend" parameterType="map">
+        INSERT INTO group_detail (group_id, user_id,role,add_at)
+        VALUES
+        <foreach collection="userIds" item="userId" separator=",">
+            (#{groupId}, #{userId},0,now())
+        </foreach>
+    </insert>
+
+
+</mapper>
