@@ -25,4 +25,3 @@ Initial development of chat group and friend features
 1. TODO tags are already present in the code; fill in details like IP addresses as prompted
 
 
-Translated with DeepL.com (free version)
