@@ -15,7 +15,7 @@
 # kuangkuang
 An Android app featuring attendance tracking and group chat functionality
 ## Log
-### 10/25/10
+### 25.10.10
 Initial development of chat group and friend features
 ## TODO
 1. Implement notifications, check-in, and other functions
