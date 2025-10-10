@@ -9,3 +9,20 @@
 3. 实现对头像的更换（暂定）
 ## Tip
 1. 代码中已经设有TODO,需根据提示进行填写IP地址等内容
+
+---
+
+# kuangkuang
+An Android app featuring attendance tracking and group chat functionality
+## Log
+### 10/25/10
+Initial development of chat group and friend features
+## TODO
+1. Implement notifications, check-in, and other functions
+2. Enhance group chat functionality: enable member queries and display group size
+3. Implement profile picture changes (tentative)
+## Tip
+1. TODO tags are already present in the code; fill in details like IP addresses as prompted
+
+
+Translated with DeepL.com (free version)
