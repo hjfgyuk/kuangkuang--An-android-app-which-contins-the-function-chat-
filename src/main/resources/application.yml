@@ -1,3 +1,4 @@
+# TODO 填写数据库连接信息
 spring:
   jackson:
     deserialization:
@@ -10,14 +11,23 @@ spring:
     name: kuangkuang
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true # jdbc:mysql://192.168.182.1:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: zty
     password: 102800
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true # jdbc:mysql://192.168.182.1:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: zty
       password: 102800
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: deepseek-r1:8b
+#        TODO 设置apikey
+    openai:
+      api-key: 123456
+
 
 server:
   port: 8080
@@ -31,6 +41,8 @@ logging:
         mapper: debug
         service: info
         controller: info
+    org.springframework.ai.chat.client.advisor: debug
+
 
 mybatis:
   #mapper????
