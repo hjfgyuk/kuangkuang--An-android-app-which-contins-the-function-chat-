@@ -1,5 +1,5 @@
 # kuangkuang
-一款具有签到与群聊功能的安卓软件/An android app which contins the function of attendance and cheat
+一款具有签到与群聊功能的安卓软件/An android app which contins the function of attendance and chat
 ## 日志
 ### 25.10.10
 初步开发聊天群聊与好友功能
