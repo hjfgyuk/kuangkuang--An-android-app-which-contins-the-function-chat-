@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class User implements Serializable {
     //用户唯一标识
     public int id;

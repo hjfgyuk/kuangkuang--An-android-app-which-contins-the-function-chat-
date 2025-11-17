@@ -12,7 +12,7 @@ public class AiCheatConfig {
     public ChatClient chatClient(OllamaChatModel model){
         return ChatClient
                 .builder(model)
-                .defaultSystem( "你是一个专业的内容安全审核员。请严格审核以下消息：\n\n" +
+                .defaultSystem( "你是一个专业的内容安全审核员。请审核以下消息，某些词汇需要你根据整体语句去进行分析，我的建议是置信度不低于0.3的发言可以通过：\n\n" +
                         "消息：%s\n\n" +
                         "审核标准：\n" +
                         "1. 政治敏感：涉及政府、领导人、政策的负面言论\n" +
@@ -29,7 +29,7 @@ public class AiCheatConfig {
                         "风险等级: [无风险/低风险/中风险/高风险]\n" +
                         "违规内容: [具体违规词句，如无则写\"无\"]\n" +
                         "审核意见: [详细说明]")
-                .defaultAdvisors(new SimpleLoggerAdvisor())
+//                .defaultAdvisors(new SimpleLoggerAdvisor())
                 .build();
     }
 

@@ -1,22 +1,94 @@
 package com.kuangkuang.kuangkuang.service;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.kuangkuang.kuangkuang.mapper.MessageMapper;
 import com.kuangkuang.kuangkuang.pojo.entity.AuditResult;
+import com.kuangkuang.kuangkuang.pojo.entity.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.amqp.core.ExchangeTypes;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Service
+@Slf4j
 public class AIContentAuditService {
+    @Autowired
+    private MessageMapper messageMapper;
+    private static RabbitTemplate rabbitTemplate;
 
     private final ChatClient chatClient;
+    @Autowired
+    public void setRabbitTemplate(RabbitTemplate rabbitTemplate){
+        this.rabbitTemplate = rabbitTemplate;
+    }
     @Autowired
     public AIContentAuditService(ChatClient chatClient) {
         this.chatClient = chatClient;
     }
+//    获取待审核消息
+@RabbitListener(bindings = @QueueBinding(
+        value = @Queue(name = "ai.check.queue"),
+        exchange = @Exchange(name = "ai.direct",type = ExchangeTypes.DIRECT),
+        key = {"check"}
+))
+public void getMessageFromMQ(Message message){
+        log.info("获取待审核信息"+message);
+        try{
+            CompletableFuture<String> future = auditMessageAsync(message.getMessage());
+            future.thenAccept(response->{
+                try {
+                    log.info("获取审核结果"+response);
+                    AuditResult result = parseAuditResult(response);
+                    log.info(result.toString());
+                    Map<String,Object> re = new HashMap<>();
+                    re.put("isPassed",result.isPassed());
+                    re.put("reason",result.getAuditOpinion());
+                    re.put("uuid",message.getUuid());
+                    rabbitTemplate.convertAndSend("ai.direct",
+                            "result",
+                            re);
+                }catch (Exception e){
+                    log.error(e.getMessage());
+                    throw  e;
+                }
+            });
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw e;
+        }
+}
+//接收审核结果
+@RabbitListener(bindings = @QueueBinding(
+        value = @Queue(name = "ai.result.queue"),
+        exchange = @Exchange(name = "ai.direct",type = ExchangeTypes.DIRECT),
+        key = {"result"}
+))
+public void getAiCheckResult(Map<String,Object> result){
+        log.info("获取最终审核结果"+result);
+        String uuid = result.get("uuid").toString();
+        boolean isPassed = (boolean) result.get("isPassed");
+        String reason = result.get("reason").toString();
+        if(isPassed){
+            log.info("审核通过，审核号："+uuid+"审核内容："+result);
+        }else {
+            UpdateWrapper<Message> wrapper = new UpdateWrapper<>();
+            wrapper.eq("uuid",uuid).set("message",reason);
+            log.info("修改消息内容,工单号："+uuid);
+            messageMapper.update(null,wrapper);
+        }
+}
     /**
      * 同步审核消息内容
      */
@@ -38,6 +110,7 @@ public class AIContentAuditService {
     /**
      * 异步审核消息内容
      */
+
     public CompletableFuture<String> auditMessageAsync(String messageContent) {
         return CompletableFuture.supplyAsync(() -> auditMessageSync(messageContent));
     }

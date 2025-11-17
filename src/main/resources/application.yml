@@ -27,6 +27,12 @@ spring:
 #        TODO 设置apikey
     openai:
       api-key: 123456
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 
 
 server:

@@ -17,6 +17,13 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.amqp.core.ExchangeTypes;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +32,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -35,6 +43,8 @@ import java.util.regex.Pattern;
 @CrossOrigin(origins = "*")
 @ServerEndpoint(value = "/chat/{groupId}",configurator = GetHttpSessionConfig.class)
 public class ChatPoint {
+
+    private static RabbitTemplate rabbitTemplate;
     @Autowired
     private static MessageMapper messageMapper;
     @Autowired
@@ -45,6 +55,12 @@ public class ChatPoint {
     public void setMessageMapper(MessageMapper messageMapper) {
         ChatPoint.messageMapper = messageMapper;
     }
+    @Autowired
+    public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+        log.info("RabbitTemplate 已注入到 ChatPoint");
+    }
+
     @Autowired
     public void setAiAuditService(AIContentAuditService auditService) {
         ChatPoint.aiContentAuditService = auditService;
@@ -57,7 +73,6 @@ public class ChatPoint {
     }
     @OnMessage
     public void onMessage(String message, Session session) {
-
         System.out.println("Received message: " + message);
         //mapper更新数据库
         ObjectMapper objectMapper = new ObjectMapper();
@@ -67,17 +82,11 @@ public class ChatPoint {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        if(aiContentAuditService==null) {
-            log.error("AI审核未初始化");
-        }
-        CompletableFuture<String> auditFuture = aiContentAuditService.auditMessageAsync(me.getMessage());
-        //获取审核内容
+        String uuid = UUID.randomUUID().toString();
+        me.setUuid(uuid);
+        sendMessageToAi(me);
         Message finalMe = me;
-        auditFuture.thenAccept(response->{
             try{
-                log.info("获取ai审核信息："+response);
-                AuditResult auditResult =  aiContentAuditService.parseAuditResult(response);
-                if(auditResult.isPassed()){
                     messageMapper.add(finalMe);
                     String groupId = getGroupIdFromSession(session);
                     if (groupId != null) {
@@ -93,15 +102,10 @@ public class ChatPoint {
                             }
                         }
                     }
-                }else {
-                    finalMe.setMessage(auditResult.getAuditOpinion());
-                    messageMapper.add(finalMe);
-                }
             }
             catch(Exception e){
                 log.error("消息处理错误:"+e.getMessage());
             }
-            });
     }
     @OnClose
     public void onClose(Session session) {
@@ -113,6 +117,19 @@ public class ChatPoint {
             }
             System.out.println("Connection closed in group " + groupId + ": " + session.getId());
         }
+    }
+    //发送消息到mq中
+    public void sendMessageToAi(Message message){
+            log.info("发送消息"+message+"到mq中");
+            try{
+            rabbitTemplate.convertAndSend(
+                    "ai.direct",
+                    "check",
+                    message);}
+            catch (Exception e){
+                log.info("发送消息到mq失败"+e.getMessage());
+                throw e;
+            }
     }
     private String getGroupIdFromSession(Session session) {
         return (String) session.getUserProperties().get("groupId");
