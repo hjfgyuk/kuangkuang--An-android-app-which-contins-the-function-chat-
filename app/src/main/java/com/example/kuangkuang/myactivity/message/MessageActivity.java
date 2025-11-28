@@ -31,7 +31,6 @@ import com.example.kuangkuang.factory.BaseRetrofitFactory;
 import com.example.kuangkuang.manager.WebSocketManager;
 import com.example.kuangkuang.myactivity.BaseActivity;
 import com.example.kuangkuang.myactivity.addFriend.AddFriend;
-import com.example.kuangkuang.myactivity.notify.EditNotifyActivity;
 import com.example.kuangkuang.service.MessageService;
 
 import java.text.SimpleDateFormat;
@@ -60,8 +59,6 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
     private Button button;
     private ImageButton back;
     private ImageButton info;
-    private ImageButton emo;
-    private ImageButton notify;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +100,10 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
         text = findViewById(R.id.message_edit);
         button = findViewById(R.id.message_send);
         back = findViewById(R.id.back_button);
-        notify = findViewById(R.id.notify_button);
         info = findViewById(R.id.group_info);
-        notify.setOnClickListener(new myClick());
         info.setOnClickListener(new myClick());
         back.setOnClickListener(new myClick());
         button.setOnClickListener(new myClick());
-        listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        listView.setStackFromBottom(true);
     }
     class myClick implements View.OnClickListener{
         @Override
@@ -139,11 +132,6 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
                 Intent intent1 = new Intent(MessageActivity.this,AddFriend.class);
                 intent1.putExtra("groupId",currentGroupId);
                 startActivity(intent1);
-            }
-            if(v.getId()==R.id.notify_button){
-                Intent intent = new Intent(MessageActivity.this, EditNotifyActivity.class);
-                intent.putExtra("groupId",currentGroupId);
-                startActivity(intent);
             }
         }
     }

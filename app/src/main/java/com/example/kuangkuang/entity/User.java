@@ -1,8 +1,17 @@
 package com.example.kuangkuang.entity;
 
 public class User {
+    private String token;
     //用户唯一标识
     public int id;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public int getId() {
         return id;
