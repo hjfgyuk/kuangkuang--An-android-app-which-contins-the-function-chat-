@@ -1,13 +1,18 @@
 package com.kuangkuang.kuangkuang.controller;
 
 import com.kuangkuang.kuangkuang.common.results.Result;
+import com.kuangkuang.kuangkuang.context.BaseContext;
 import com.kuangkuang.kuangkuang.pojo.dto.UserDto;
 import com.kuangkuang.kuangkuang.pojo.entity.User;
 import com.kuangkuang.kuangkuang.pojo.vo.UserVo;
 import com.kuangkuang.kuangkuang.service.UserService;
+import com.kuangkuang.kuangkuang.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -26,7 +31,10 @@ public class UserController {
     public Result<UserVo> login(@RequestBody UserDto userDto){
         log.info("login user: " + userDto.toString());
         UserVo userVo = userService.login(userDto);
-
+        Map<String,Object> map = new HashMap<>();
+        map.put(JwtUtil.empId,userVo.getId());
+        String token = JwtUtil.createJwt(map);
+        userVo.setToken(token);
         log.info("login user: "+userVo.toString());
         return Result.success(userVo);
     }
