@@ -23,7 +23,7 @@ public class WebSocketManager {
     private static WebSocketManager instance;
     private WebSocket webSocket;
     private OkHttpClient client;
-    private String serverUrl = "ws:// :8080/chat";//TODO 设置IP地址
+    private String serverUrl = "ws://10.0.2.2:8080/chat";//TODO 设置IP地址
 
     public String getGroupId() {
         return groupId;

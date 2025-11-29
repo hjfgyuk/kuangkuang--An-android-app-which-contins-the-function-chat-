@@ -154,6 +154,7 @@ public class LoginActivity extends BaseActivity {
                            Log.d("登录","登陆成功"+result.toString());
                             BaseContext.setCurrentId((long) result.id);
                             BaseContext.setCurrentUser(result);
+                            BaseContext.setTokenThreadLocal(result.getToken());
                            Intent intent = new Intent(LoginActivity.this, RootActivity.class);
                            startActivity(intent);
                        }else{
