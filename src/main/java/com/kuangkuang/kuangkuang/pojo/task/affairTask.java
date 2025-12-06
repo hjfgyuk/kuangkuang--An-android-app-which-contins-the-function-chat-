@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class affairTask {
-    @Scheduled(cron = "* 0 * * * ?")
+    @Scheduled(cron = "* * 0 * * ?")
     public void deleteAffair() {
       log.info("delete affairs");
       //TODO 删除事务

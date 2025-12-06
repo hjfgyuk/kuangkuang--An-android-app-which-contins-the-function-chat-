@@ -41,7 +41,8 @@ public class GroupController {
     }
     @PostMapping("/addFriend")
     public Result addFriend(@RequestBody HashMap<String, Object> map){
-        log.info("添加好友"+map.get("userIds").toString()+"到群聊"+map.get("groupId"));
+        log.info("添加好友"+map.get("list").toString()+"到群聊"+map.get("groupId"));
+        //TODO 对好友进行重复性检验以免多次添加好友
         groupService.addFriend(map);
         return Result.success();
     }

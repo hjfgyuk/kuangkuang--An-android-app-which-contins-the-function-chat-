@@ -1,5 +1,6 @@
 package com.kuangkuang.kuangkuang.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("`group`")
 public class Group implements Serializable {
     //群聊唯一识别方式
     private int id;

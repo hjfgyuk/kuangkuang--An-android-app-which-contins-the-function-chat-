@@ -25,14 +25,18 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -47,6 +51,9 @@ public class ChatPoint {
     private static RabbitTemplate rabbitTemplate;
     @Autowired
     private static MessageMapper messageMapper;
+    private static RedisTemplate redisTemplate;
+    @Autowired
+    public void setRedisTemplate(RedisTemplate redisTemplate){this.redisTemplate=redisTemplate;}
     @Autowired
     private static AIContentAuditService aiContentAuditService;
     private static final Map<String, Set<Session>> chatGroups = new ConcurrentHashMap<>();
@@ -86,23 +93,55 @@ public class ChatPoint {
         me.setUuid(uuid);
         sendMessageToAi(me);
         Message finalMe = me;
-            try{
-                    messageMapper.add(finalMe);
-                    String groupId = getGroupIdFromSession(session);
-                    if (groupId != null) {
-                        // 广播消息到同一群聊
-                        Set<Session> sessions = chatGroups.get(groupId);
-                        for (Session s : sessions) {
-                            if (s.isOpen() && !s.equals(session)) {
-                                try {
-                                    s.getBasicRemote().sendText(message);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
+        try {
+
+            redisTemplate.execute(new SessionCallback<List<Object>>() {
+                @Override
+                public List<Object> execute(RedisOperations operations) throws DataAccessException {
+                    try {
+                        operations.multi();
+                        String dateKey = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+                        String messageHashKey = "chat:group:"+finalMe.getGroupId()+":message:" + uuid;
+                        Map<String, String> messageMap = new HashMap<>();
+                        messageMap.put("userId", String.valueOf(finalMe.getUserId()));
+                        messageMap.put("content", finalMe.getMessage());
+                        messageMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
+                        messageMap.put("uuid", finalMe.getUuid());
+
+                        operations.opsForHash().putAll(messageHashKey, messageMap);
+                        // 设置消息过期时间（可选，比如保留30天）
+                        operations.expire(messageHashKey, Duration.ofDays(7));
+//                        operations.opsForStream().add("chat:group:" + finalMe.getGroupId(), messageMap);
+                        String rankKey = "chat:rank:group:" + finalMe.getGroupId() + ":" + dateKey;
+                        operations.opsForZSet().incrementScore(rankKey, finalMe.getUserId(), 1);
+
+                        return operations.exec();
+                    } catch (DataAccessException e) {
+                        log.error("Data access error while executing Redis commands: {}", e.getMessage());
+                        throw e; // Rethrow to signal failure
+                    } catch (Exception e) {
+                        log.error("Unexpected error during Redis operations: {}", e.getMessage());
+                        throw new RuntimeException("Unexpected error during Redis operations", e);
+                    }
+                }
+
+            });
+            messageMapper.add(finalMe);
+            String groupId = getGroupIdFromSession(session);
+            if (groupId != null) {
+                // 广播消息到同一群聊
+                Set<Session> sessions = chatGroups.get(groupId);
+                for (Session s : sessions) {
+                    if (s.isOpen() && !s.equals(session)) {
+                        try {
+                            s.getBasicRemote().sendText(message);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
+                }
             }
+        }
             catch(Exception e){
                 log.error("消息处理错误:"+e.getMessage());
             }

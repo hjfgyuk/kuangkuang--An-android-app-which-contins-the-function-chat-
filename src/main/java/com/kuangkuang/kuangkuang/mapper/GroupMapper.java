@@ -1,5 +1,6 @@
 package com.kuangkuang.kuangkuang.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.kuangkuang.kuangkuang.pojo.entity.Group;
 import com.kuangkuang.kuangkuang.pojo.entity.User;
 import org.apache.ibatis.annotations.Delete;
@@ -10,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface GroupMapper {
+public interface GroupMapper extends BaseMapper<Group> {
 
 
     List<Group> list(List<Integer> groups);

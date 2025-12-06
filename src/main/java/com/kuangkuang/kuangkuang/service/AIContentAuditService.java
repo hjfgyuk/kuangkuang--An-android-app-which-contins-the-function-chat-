@@ -79,7 +79,7 @@ public void getAiCheckResult(Map<String,Object> result){
         log.info("获取最终审核结果"+result);
         String uuid = result.get("uuid").toString();
         boolean isPassed = (boolean) result.get("isPassed");
-        String reason = result.get("reason").toString();
+        String reason = (String) result.get("reason");
         if(isPassed){
             log.info("审核通过，审核号："+uuid+"审核内容："+result);
         }else {
