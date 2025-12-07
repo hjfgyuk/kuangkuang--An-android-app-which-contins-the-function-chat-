@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -101,11 +102,14 @@ public class AddFriend extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Result> call, Response<Result> response) {
                         Log.d("添加好友到群聊","成功");
+                        Toast.makeText(AddFriend.this, "添加好友成功", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                     @Override
                     public void onFailure(Call<Result> call, Throwable t) {
                         Log.e("添加好友进群聊",t.getMessage());
+                        Toast.makeText(AddFriend.this, "添加好友失败", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

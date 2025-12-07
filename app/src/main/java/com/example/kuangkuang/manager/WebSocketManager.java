@@ -87,7 +87,6 @@ public class WebSocketManager {
                     String name = jsonObject.getString("userName");
 
                     if (callback != null) {
-                        Log.d("1","2222222");
                         Message message = new Message();
                         message.setMessage(content);
                         message.setGroupId(Integer.parseInt(groupId));

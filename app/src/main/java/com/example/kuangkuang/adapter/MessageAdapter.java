@@ -20,6 +20,7 @@ import com.example.kuangkuang.myactivity.UserInfoActivity.FriendInfoActivity;
 import com.example.kuangkuang.service.GroupService;
 
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -33,6 +34,11 @@ public class MessageAdapter extends BaseAdapter implements AdapterView.OnItemCli
     private GroupService groupService = retrofitFactory.setRetrofit().create(GroupService.class);
     private int ITEM_SELF = 1;
     private int ITEM_OTHER = 0;
+    private long dragon;
+
+    public void setDragon(long dragon) {
+        this.dragon = dragon;
+    }
     OkHttpClient client = new  OkHttpClient();
 
     @Override
@@ -110,7 +116,9 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
     // 设置视图内容 - 添加空值检查
     if (holder.message_name != null) {
-        holder.message_name.setText(message.getUserName());
+        if(!Objects.isNull(dragon))
+        holder.message_name.setText(message.getUserId()==dragon?message.getUserName()+"🐲":message.getUserName());
+        else holder.message_name.setText(message.getUserName());
     }
 
     if (holder.message_avatar != null) {
@@ -177,6 +185,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
         public ImageView message_avatar;
         public TextView message_name;
         public TextView message_text;
+
 
     }
 

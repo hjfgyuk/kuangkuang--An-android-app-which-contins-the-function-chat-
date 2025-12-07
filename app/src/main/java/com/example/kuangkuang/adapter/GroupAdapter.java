@@ -78,6 +78,7 @@ public class GroupAdapter extends BaseAdapter implements AdapterView.OnItemClick
         Intent intent = new Intent(context, MessageActivity.class);
         intent.putExtra("groupId", groups.get(position).getId());
         intent.putExtra("userId", BaseContext.getCurrentId());
+        intent.putExtra("dragon",groups.get(position).getDragon());
         context.startActivity(intent);
 
     }

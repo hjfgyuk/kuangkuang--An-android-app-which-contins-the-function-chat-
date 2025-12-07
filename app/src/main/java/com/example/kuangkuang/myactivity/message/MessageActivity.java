@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,6 +53,7 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
 
     private String currentGroupId;
     private String userId;
+    private long dragon;
     private BaseRetrofitFactory factory = new BaseRetrofitFactory();
     private MessageService messageService = factory.setRetrofit().create(MessageService.class);
     private MessageAdapter adapter;
@@ -69,6 +72,7 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
         intent = getIntent();
         currentGroupId = String.valueOf(intent.getIntExtra("groupId",1));
         userId = String.valueOf(intent.getLongExtra("userId",1));
+        dragon = intent.getLongExtra("dragon",0);
         webSocketManager = WebSocketManager.getInstance();
         webSocketManager.setCallback(this); // 设置回调
         webSocketManager.setGroupId(currentGroupId);
@@ -88,6 +92,8 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
                 if(response.isSuccessful()&&response.body()!=null){
                     List<Message> messages = response.body().getData();
                     adapter = new MessageAdapter(MessageActivity.this,messages);
+                    if(!Objects.isNull(dragon))
+                        adapter.setDragon(dragon);
                     listView.setAdapter(adapter);
                     listView.setOnItemClickListener((AdapterView.OnItemClickListener) adapter);
                     listView.setOnItemLongClickListener((AdapterView.OnItemLongClickListener) adapter);
@@ -100,6 +106,8 @@ public class MessageActivity extends BaseActivity  implements WebSocketManager.W
                     Log.e(TAG,"获取信息列表失败"+t.getMessage());
             }
         });
+        String dragonResult = dragon==0?"昨日无人获得龙王称号":String.format("%d昨日获得龙王称号",dragon);
+        Toast.makeText(this, dragonResult, Toast.LENGTH_SHORT).show();
         text = findViewById(R.id.message_edit);
         button = findViewById(R.id.message_send);
         back = findViewById(R.id.back_button);

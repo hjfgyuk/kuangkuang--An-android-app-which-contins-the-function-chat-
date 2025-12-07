@@ -9,6 +9,15 @@ public class Group {
     private int messageUnread;
     //最近的时间戳
     private String lastTime;
+    private long dragon;
+
+    public long getDragon() {
+        return dragon;
+    }
+
+    public void setDragon(long dragon) {
+        this.dragon = dragon;
+    }
 
     public String getDescription() {
         return description;
