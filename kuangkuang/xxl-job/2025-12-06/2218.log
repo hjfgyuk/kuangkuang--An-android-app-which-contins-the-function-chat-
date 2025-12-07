@@ -1,0 +1,7 @@
+2025-12-06 15:59:45 [com.xxl.job.core.thread.JobThread#run]-[128]-[xxl-job, JobThread-6-1765007985492] <br>----------- xxl-job job execute start -----------<br>----------- Param:
+2025-12-06 15:59:45 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[42]-[Thread-15] 任务开始执行
+2025-12-06 15:59:45 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[52]-[Thread-15] 分片[1/1]，日期:20251205
+2025-12-06 15:59:45 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[57]-[Thread-15] 总群组数量: 0
+2025-12-06 15:59:45 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[61]-[Thread-15] 没有找到活跃群组
+2025-12-06 15:59:45 [com.xxl.job.core.thread.JobThread#run]-[174]-[xxl-job, JobThread-6-1765007985492] <br>----------- xxl-job job execute end(finish) -----------<br>----------- Result: handleCode=200, handleMsg = null
+2025-12-06 15:59:45 [com.xxl.job.core.thread.TriggerCallbackThread#callbackLog]-[215]-[xxl-job, executor TriggerCallbackThread] <br>----------- xxl-job job callback finish.

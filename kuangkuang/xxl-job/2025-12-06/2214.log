@@ -1,0 +1,13 @@
+2025-12-06 15:42:20 [com.xxl.job.core.thread.JobThread#run]-[128]-[xxl-job, JobThread-6-1765006940736] <br>----------- xxl-job job execute start -----------<br>----------- Param:
+2025-12-06 15:42:20 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[42]-[Thread-21] 任务开始执行
+2025-12-06 15:42:20 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[52]-[Thread-21] 分片[1/1]，日期:20251205
+2025-12-06 15:42:20 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[57]-[Thread-21] 总群组数量: 0
+2025-12-06 15:42:20 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[61]-[Thread-21] 没有找到活跃群组
+2025-12-06 15:42:20 [com.xxl.job.core.thread.JobThread#run]-[174]-[xxl-job, JobThread-6-1765006940736] <br>----------- xxl-job job execute end(finish) -----------<br>----------- Result: handleCode=200, handleMsg = null
+2025-12-06 15:42:20 [com.xxl.job.core.thread.TriggerCallbackThread#callbackLog]-[215]-[xxl-job, executor TriggerCallbackThread] <br>----------- xxl-job job callback finish.
+2025-12-06 15:42:32 [com.xxl.job.core.thread.JobThread#run]-[189]-[xxl-job, JobThread-6-1765006940736] <br>----------- JobThread toStop, stopReason:web container destroy and kill the job.
+2025-12-06 15:42:32 [com.xxl.job.core.thread.JobThread#run]-[199]-[xxl-job, JobThread-6-1765006940736] <br>----------- JobThread Exception:java.lang.InterruptedException
+	at java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1770)
+	at java.base/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+	at com.xxl.job.core.thread.JobThread.run(JobThread.java:107)
+<br>----------- xxl-job job execute end(error) -----------

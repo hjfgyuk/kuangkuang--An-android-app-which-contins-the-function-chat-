@@ -1,0 +1,8 @@
+2025-12-04 22:00:34 [com.xxl.job.core.thread.JobThread#run]-[128]-[xxl-job, JobThread-6-1764856834127] <br>----------- xxl-job job execute start -----------<br>----------- Param:
+2025-12-04 22:00:34 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[39]-[Thread-15] begin
+2025-12-04 22:00:34 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[43]-[Thread-15] data:20251203
+2025-12-04 22:00:34 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[48]-[Thread-15] 分片[1/1]， 使用线程池大小:64
+2025-12-04 22:00:34 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#lambda$selectDragonKing$0]-[59]-[pool-6-thread-1] 处理群聊 1 时异常: class java.lang.Integer cannot be cast to class java.lang.String (java.lang.Integer and java.lang.String are in module java.base of loader 'bootstrap')
+2025-12-04 22:00:34 [com.kuangkuang.kuangkuang.pojo.task.dragonTask#selectDragonKing]-[69]-[Thread-15] 分片[1/1] 所有异步任务执行完毕，共处理 1 个群聊
+2025-12-04 22:00:34 [com.xxl.job.core.thread.JobThread#run]-[174]-[xxl-job, JobThread-6-1764856834127] <br>----------- xxl-job job execute end(finish) -----------<br>----------- Result: handleCode=200, handleMsg = null
+2025-12-04 22:00:34 [com.xxl.job.core.thread.TriggerCallbackThread#callbackLog]-[215]-[xxl-job, executor TriggerCallbackThread] <br>----------- xxl-job job callback finish.
