@@ -3,6 +3,10 @@
 ## 日志
 ### 25.10.10
 初步开发聊天群聊与好友功能
+### 25.11.17
+开发了ai审核与jwt校验功能
+### 25.12.7
+实现龙王评选
 ## TODO
 1. 实现通知、签到等功能
 2. 完善群聊功能，实现对群聊成员的查询与群聊人数的显示
@@ -17,6 +21,10 @@ An Android app featuring attendance tracking and group chat functionality
 ## Log
 ### 25.10.10
 Initial development of chat group and friend features
+### 25.11.17
+Developed AI review and JWT verification features
+### 25.12.7
+Implemented Dragon King selection
 ## TODO
 1. Implement notifications, check-in, and other functions
 2. Enhance group chat functionality: enable member queries and display group size
