@@ -26,6 +26,7 @@ public class Group implements Serializable {
     private LocalDateTime createTime;
     private String description;
     private int maxNumber;
+    private long dragon;
 //    //群成员列表
 //    private List<Integer> members;
 
