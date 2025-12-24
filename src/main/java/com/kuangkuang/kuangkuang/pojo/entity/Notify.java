@@ -27,4 +27,5 @@ public class Notify implements Serializable {
     private String time;
     @TableField("deadline")
     private String deadline;
+    int type;//默认0 签到为1
 }

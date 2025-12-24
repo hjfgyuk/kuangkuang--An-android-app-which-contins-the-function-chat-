@@ -3,7 +3,6 @@ package com.kuangkuang.kuangkuang.service;
 import com.kuangkuang.kuangkuang.pojo.dto.UserDto;
 import com.kuangkuang.kuangkuang.pojo.entity.User;
 import com.kuangkuang.kuangkuang.pojo.vo.UserVo;
-import org.springframework.stereotype.Service;
 
 public interface UserService {
 
@@ -15,4 +14,8 @@ public interface UserService {
 
 
     User getUserById(int id);
+
+    void sendVerificationCode(String email);
+
+    UserVo loginByCode(String email, String code);
 }

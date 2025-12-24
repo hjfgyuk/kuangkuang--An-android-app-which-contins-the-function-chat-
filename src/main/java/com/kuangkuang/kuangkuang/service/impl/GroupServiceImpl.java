@@ -27,7 +27,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<Group> get(int id) {
         List<Integer> groupIds = groupDetailMapper.getByUerId(id);
-        List<Group> groups = groupMapper.list(groupIds);
+        List groups = new ArrayList<>();
+        if (groupIds!=null&&!groups.isEmpty()) {//注意要有判断是否为null，否则会返回所有group
+            groups = groupMapper.list(groupIds);
+        }
         return groups;
     }
 

@@ -1,5 +1,7 @@
 package com.kuangkuang.kuangkuang.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +14,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@TableName("user")
 public class User implements Serializable {
     //用户唯一标识
     public int id;
@@ -25,4 +27,8 @@ public class User implements Serializable {
     //默认为1（男）
     @Value("1")
     private String sex;
+    
+    private String email;
+    @TableField(exist = false)
+    private String verificationCode;
 }

@@ -28,7 +28,9 @@ public class WebSocketConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor)
                 .excludePathPatterns("/user/login",
                         "/user/sign",
-                        "/debug/redis-test");
+                        "/debug/redis-test",
+                        "/user/login/{email}",
+                        "/user/loginByCode");
         log.info("jwt拦截器配置完成");
 
     }

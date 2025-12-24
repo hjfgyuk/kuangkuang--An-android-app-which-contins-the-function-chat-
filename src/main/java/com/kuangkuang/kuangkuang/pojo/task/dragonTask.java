@@ -1,11 +1,14 @@
 package com.kuangkuang.kuangkuang.pojo.task;
 
+import cn.hutool.core.lang.Validator;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.kuangkuang.kuangkuang.mapper.GroupMapper;
 import com.kuangkuang.kuangkuang.pojo.entity.Group;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.poi.ss.util.RegionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.ScanOptions;
@@ -45,8 +48,7 @@ public class dragonTask {
             // 获取分片参数
             int shardIndex = XxlJobHelper.getShardIndex();
             int shardTotal = XxlJobHelper.getShardTotal();
-
-            // 获取昨天的日期key
+             // 获取昨天的日期key
             String dateKey = LocalDate.now().minusDays(1).format(DateTimeFormatter.BASIC_ISO_DATE);
 
             XxlJobHelper.log("分片[{}/{}]，日期:{}", shardIndex + 1, shardTotal, dateKey);

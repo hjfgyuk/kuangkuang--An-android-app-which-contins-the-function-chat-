@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class UserDto implements Serializable {
     private String name;
     private String password;
+    private String email;
     @Value("1")
     private String sex;
 }
