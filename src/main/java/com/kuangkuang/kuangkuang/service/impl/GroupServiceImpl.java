@@ -46,6 +46,10 @@ public class GroupServiceImpl implements GroupService {
         groupMapper.delete(groupId);
     }
 
+    /**
+     *将好友添加到群聊中
+     * @param map
+     */
     @Override
     public void addFriend(HashMap<String, Object> map) {
         Integer groupId = Integer.parseInt((String) map.get("groupId"));

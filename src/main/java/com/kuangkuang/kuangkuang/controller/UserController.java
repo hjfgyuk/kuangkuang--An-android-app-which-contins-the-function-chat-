@@ -60,17 +60,7 @@ public class UserController {
         userVo.setToken(token);
         return Result.success(userVo);
     }
-//    @GetMapping("/login/{phone}/{code}")
-//    public Result<UserVo> loginByCode(@PathVariable("phone")String phone, @PathVariable("code") String code){
-//        log.info(phone+"发送验证码:"+code);
-//        UserVo userVo = userService.loginByCode(phone,code);
-//        Map<String,Object> map = new HashMap<>();
-//        map.put(JwtUtil.empId,userVo.getId());
-//        String token = JwtUtil.createJwt(map);
-//        userVo.setToken(token);
-//        log.info("login user: "+userVo.toString());
-//        return Result.success(userVo);
-//    }
+
     @PostMapping("/sign")
     public Result sign(@RequestBody UserDto userDto){
         log.info("sign user: " + userDto.toString());
