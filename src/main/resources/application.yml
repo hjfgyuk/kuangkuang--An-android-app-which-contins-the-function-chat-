@@ -4,39 +4,50 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
   profiles:
-    active: dev
+    active: zty
   main:
     allow-circular-references: true
   application:
     name: kuangkuang
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-    username: zty
-    password: 102800
+    url: jdbc:mysql://${kuangkuang.datasource.host}:${kuangkuang.datasource.druid.port}/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${kuangkuang.datasource.username}
+    password: ${kuangkuang.datasource.password}
+    type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: zty
-      password: 102800
+      url: jdbc:mysql://${kuangkuang.datasource.host}:${kuangkuang.datasource.druid.port}/kuangkuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username:  ${kuangkuang.datasource.username}
+      password:  ${kuangkuang.datasource.password}
   ai:
     ollama:
-      base-url: http://localhost:11434
+      base-url: http://${kuangkuang.host}:${kuangkuang.ai.port}
       chat:
         model: deepseek-r1:8b
-#        TODO 设置apikey
     openai:
-      api-key: 123456
+      api-key: ${kuangkuang.ai.openai.api-key}
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${kuangkuang.rabbitmq.host}
+    port: ${kuangkuang.rabbitmq.port}
+    username: ${kuangkuang.rabbitmq.username}
+    password: ${kuangkuang.rabbitmq.password}
+  # 邮件配置（敏感信息建议使用环境变量）
+  mail:
+    host:  ${kuangkuang.mail.host}
+    username: ${kuangkuang.mail.username}
+    password: ${kuangkuang.mail.password}
+    from: ${kuangkuang.mail.from}
+    from-name:  ${kuangkuang.mail.from-name}
+    ssl:
+      enabled: true
+    port: ${kuangkuang.mail.port}
   data:
     redis:
-      port: 6379
-      database: 1
-      host: localhost
+      port: ${kuangkuang.data.redis.port}
+      database: ${kuangkuang.data.redis.database}
+      host: ${kuangkuang.data.redis.host}
 xxl:
   job:
     executor:
@@ -69,14 +80,17 @@ logging:
         service: info
         controller: info
     org.springframework.ai.chat.client.advisor: debug
+    org.springframework.jdbc: DEBUG
 
 
-mybatis:
-  #mapper????
+
+
+
+mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.kuangkuang.kuangkuang.pojo.entity
   configuration:
-    #??????
     map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
