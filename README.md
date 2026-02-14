@@ -1,3 +1,4 @@
+![](cpkmeh66n5rmr0cwbe6bnvmdjm_result_0.png)
 # kuangkuang
 一款具有签到与群聊功能的安卓软件/An android app which contins the function of attendance and chat
 ## 日志
@@ -15,7 +16,7 @@
 3. 实现对头像的更换（暂定）
 ## Tip
 1. 代码中已经设有TODO,需根据提示进行填写IP地址等内容
-2. Android代码在main，后端代码在master
+2. Android代码在app，后端代码在backend
 
 ---
 
@@ -36,5 +37,6 @@ Added email verification functionality. Fixed a bug where users without group ch
 3. Implement profile picture changes (tentative)
 ## Tip
 1. TODO tags are already present in the code; fill in details like IP addresses as prompted
+2. The code od front end is in the app branch,back end is in the back end banch.
 
 
